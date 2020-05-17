@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoApp/ui/shared/widgets/custom_card.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -12,12 +13,20 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(),
       body: ListView.separated(
           itemBuilder: (context, index) {
-            return Text("aaa");
+            return CustomCard(
+              title: "aaaaaa",
+              subtitle: "$index",
+              imageURL: "https://picsum.photos/200/300",
+            );
           },
           separatorBuilder: (context, index) {
             return Divider();
           },
-          itemCount: 15),
+          itemCount: 5),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.adb),
+      ),
     );
   }
 }
