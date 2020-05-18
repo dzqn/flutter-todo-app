@@ -12,6 +12,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   ApiService service = ApiService.getInstance();
   List<Product> productList = [];
+  Color color = Colors.white; // fake değişken (Kullanılmıyor)
 
   @override
   Widget build(BuildContext context) {
@@ -96,8 +97,17 @@ class _HomeViewState extends State<HomeView> {
               child: Text("Ekle"),
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => AddProductView()));
+                Navigator.of(context)
+                    .push(MaterialPageRoute(
+                        builder: (context) => AddProductView()))
+                    .then((value) => {
+                          // Geri gelince sayfanın yenilenmesi için fake yapıldı
+                          setState(() {
+                            color = color == Colors.white
+                                ? Colors.grey
+                                : Colors.white;
+                          })
+                        });
               },
             )
           ],
