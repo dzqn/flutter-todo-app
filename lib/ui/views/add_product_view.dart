@@ -13,6 +13,7 @@ class _AddProductViewState extends State<AddProductView> {
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerPrice = TextEditingController();
   TextEditingController controllerImage = TextEditingController();
+
   String validator(val) {
     if (val.isEmpty) {
       return "Bu alan zorunludur.";
@@ -40,9 +41,10 @@ class _AddProductViewState extends State<AddProductView> {
                 TextFormField(
                   controller: controllerPrice,
                   decoration: InputDecoration(
-                    border: UnderlineInputBorder(),
+                    border: OutlineInputBorder(),
                     labelText: "Fiyat",
                   ),
+                  keyboardType: TextInputType.number,
                   validator: (val) {
                     if (val.isEmpty) {
                       return "Bu alan boş olamaz";
@@ -55,21 +57,24 @@ class _AddProductViewState extends State<AddProductView> {
                 TextFormField(
                   controller: controllerImage,
                   decoration: InputDecoration(
-                    border: InputBorder.none,
+                    border: UnderlineInputBorder(),
                     labelText: "Resim",
                   ),
-                  validator: this.validator,
+                  //validator: this.validator,
                 ),
                 RaisedButton.icon(
                   icon: Icon(Icons.send),
                   label: Text("Ekle"),
                   onPressed: () async {
-                    var model = Product(
-                        productName: controllerName.text,
-                        imageUrl: controllerImage.text,
-                        price: int.parse(controllerPrice.text));
-                    await ApiService.getInstance().addProducts(model);
-                    Navigator.pop(context);
+                    if (formKey.currentState.validate()) {
+                      var model = Product(
+                          productName: controllerName.text,
+                          //imageUrl: controllerImage.text,
+                          imageUrl: "https://picsum.photos/seed/picsum/200/300",
+                          price: int.parse(controllerPrice.text));
+                      await ApiService.getInstance().addProducts(model);
+                      Navigator.pop(context);
+                    }
                   },
                   shape: StadiumBorder(),
                 ),
